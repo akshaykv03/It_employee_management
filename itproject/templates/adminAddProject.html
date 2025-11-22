@@ -1,0 +1,138 @@
+{% extends 'adminHome.html' %}
+{% block content %}
+
+<section id="hero" class="hero section dark-background contact">
+  <img src="../static/assets/img/hero-bg-admin.jpg" alt="" data-aos="fade-in">
+
+  <div class="container">
+    <div class="col-lg-12">
+
+      <!-- Title -->
+      <div class="row gy-4 mt-5 justify-content-center" data-aos="fade-up">
+        <div class="col-xl-3 col-md-4">
+          <div class="icon-box">
+            <i class="bi bi-card-list"></i>
+            <h3><a href="">Add Project</a></h3>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <!-- Messages -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- ✅ Project Form -->
+      <form method="post" class="php-email-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row gy-4">
+
+          <div class="col-md-6">
+            <label for="title">Project Title</label>
+            <input type="text" id="title" name="title" class="form-control" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="client">Client Name</label>
+            <input type="text" id="client" name="client" class="form-control" required>
+          </div>
+
+          <div class="col-md-12">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" class="form-control" required></textarea>
+          </div>
+
+          <!-- <div class="col-md-12">
+            <label for="requirements">Requirements</label>
+            <textarea id="requirements" name="requirements" class="form-control" required></textarea>
+          </div> -->
+
+          <div class="col-md-6">
+            <label for="start_date">Start Date</label>
+            <input type="date" id="start_date" name="start_date" class="form-control" required>
+          </div>
+
+          <div class="col-md-6">
+            <label for="end_date">End Date</label>
+            <input type="date" id="end_date" name="end_date" class="form-control">
+          </div>
+
+          <!--<div class="col-md-6">
+            <label for="attachement">Attachment</label>
+            <input type="file" id="attachement" name="attachement" class="form-control">
+          </div>
+
+          <div class="col-md-6">
+            <label for="lead">Assign Team Lead</label>
+            <select name="lead" id="lead" class="form-control" required>
+              <option value="" disabled selected>Select Team Lead</option>
+              {% for lead in team_leads %}
+                <option value="{{ lead.id }}">{{ lead.name }} ({{ lead.department }})</option>
+              {% endfor %}
+            </select>
+          </div> -->
+
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
+
+        </div>
+      </form>
+
+      <br><br>
+
+      <!-- ✅ Display All Projects -->
+      <!-- <h3 class="text-center">All Projects</h3>
+      <table class="table table-bordered table-striped mt-3">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Client</th>
+            <th>Description</th>
+            <th>Status</th> -->
+            <!-- <th>Attachment</th>
+            <th>Assigned</th> -->
+            <!-- <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in projects %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ project.title }}</td>
+            <td>{{ project.client_name }}</td>
+            <td>{{ project.description }}</td>
+            <td>
+              {{ project.status }} <br>
+              {% if project.status != 'Completed' %}
+              <a href="adminProjectComplete?id={{ project.id }}" class="btn btn-success">Mark as Complete</a>
+              {% endif %}
+            </td> -->
+            <!-- <td>
+              {% if project.attachment %}
+                <a href="/static/media/{{ project.attachment }}" target="_blank">View</a>
+              {% else %}
+                No File
+              {% endif %}
+            </td> -->
+            <!-- <td><a href="adminViewassignment?id={{ project.id }}" class="btn btn-success">Developers</a></td> -->
+            <!-- <td>  <a href="adminEditProject?id={{ project.id }}" class="btn btn-warning">Edit</a> <br><br>
+            <a href="adminDeleteProject?id={{ project.id }}" class="btn btn-danger">Delete</a></td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center text-muted">No projects available.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table> -->
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

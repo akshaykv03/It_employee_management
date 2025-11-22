@@ -1,0 +1,90 @@
+{% extends 'teamLeadHome.html' %}
+{% block content %}
+
+<section id="hero" class="hero section dark-background contact">
+ <img src="../static/assets/img/hero-bg-user.jpg" alt="" data-aos="fade-in">
+
+  <div class="container">
+    <div class="col-lg-12">
+
+      <!-- Title -->
+      <div class="row gy-4 mt-5 justify-content-center" data-aos="fade-up">
+        <div class="col-xl-3 col-md-4">
+          <div class="icon-box">
+            <i class="bi bi-card-list"></i>
+            <h3><a href="">Update work Progress</a></h3>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <!-- Messages -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- ✅ Project Form -->
+      <form method="post" class="php-email-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row gy-4">
+
+          <div class="col-md-12">
+            <label for="client">Attach File</label>
+            <input type="file" id="client" name="attachment" class="form-control" required>
+          </div>
+
+          <div class="col-md-12">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" class="form-control" required></textarea>
+          </div>
+
+
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+
+        </div>
+      </form>
+
+      <br><br>
+
+      <!-- ✅ Display All Assignments -->
+      <!-- <h3 class="text-center">Work Progress</h3>
+      <table class="table table-bordered table-striped mt-3">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Update</th>
+            <th>Attachment</th>
+            <th>Updated on</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.progress_description }}</td>
+            <td>
+                {% if i.attachment %}
+                <a href="/static/media/{{ i.attachment }}" target="_blank">View</a>
+                {% else %}
+                No File
+                {% endif %}
+            </td>
+            <td>{{ i.update_date }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center text-muted">No projects available.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table> -->
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

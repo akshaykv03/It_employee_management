@@ -1,0 +1,70 @@
+{% extends 'developerHome.html' %}
+{% block content %}
+
+<section id="hero" class="hero section dark-background contact">
+ <img src="../static/assets/img/hero-bg-user.jpg" alt="" data-aos="fade-in">
+
+  <div class="container">
+    <div class="col-lg-12">
+
+      <!-- Title -->
+      <div class="row gy-4 mt-5 justify-content-center" data-aos="fade-up">
+        <div class="col-xl-3 col-md-4">
+          <div class="icon-box">
+            <i class="bi bi-card-list"></i>
+            <h3><a href="">Work Progress History</a></h3>
+            <h4><b>Developer : {{ name }}</b></h4>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      
+      <!-- ✅ Display All Assignments -->
+      <!-- <h3 class="text-center">Work Progress</h3> -->
+       <div class="table-responsive">
+      <table class="table table-bordered table-striped mt-3">
+         <thead>
+          <tr>
+            <th>#</th>
+            <th>Project</th>
+            <th>Description</th>
+            <th>Module</th>
+            <th>Team Lead</th>
+            <th>Update</th>
+            <th>Attachment</th>
+            <th>Updated on</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.assignment.project.title }}</td>
+            <td>{{ i.assignment.project.description }}</td>
+            <td>{{ i.assignment.module }}</td>
+            <td>{{ i.assignment.team_lead.name }}</td>
+            <td>{{ i.progress_description }}</td>
+            <td>
+                {% if i.attachment %}
+                <a href="/static/media/{{ i.attachment }}" target="_blank">View</a>
+                {% else %}
+                No File
+                {% endif %}
+            </td>
+            <td>{{ i.update_date }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center text-muted">No projects updated.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

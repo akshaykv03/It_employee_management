@@ -1,0 +1,98 @@
+{% extends 'index.html' %} {% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero section dark-background contact">
+
+  <img src="../static/assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+
+  <div class="container">
+      <div class="col-lg-12">
+        <div class="row gy-4 mt-5 justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-xl-3 col-md-4" data-aos="fade-up" data-aos-delay="500">
+              <div class="icon-box">
+                <i class="bi bi-card-list"></i>
+                <h3><a href="">Developer Registration</a></h3>
+              </div>
+            </div>
+        </div>
+        <br><br>
+
+        {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-primary">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      {% if msg %}
+      <div class="alert alert-success">{{ msg }}</div>
+      {% endif %}
+
+      
+        <form method="post" class="php-email-form" enctype="multipart/form-data" onsubmit="return validateEmail()">
+            {% csrf_token %}
+          <div class="row gy-4">
+
+            <div class="col-md-6">
+              <input type="text" pattern="[A-Za-z\s]{1,}" name="name" class="form-control" placeholder="First Name" required="">
+            </div>
+              <div class="col-md-6">
+                <input type="text" pattern="[A-Za-z\s]{1,}" name="lname" class="form-control" placeholder="Last Name" required="">
+              </div>
+              <div class="col-md-6">
+                <input type="text"  name="username" class="form-control" placeholder="Username" required="">
+              </div>
+            <div class="col-md-6">
+                <input type="email" id="w3lSender" name="email" class="form-control" placeholder="E-mail" required="">
+                <span id="email-error" style="color: red;"></span>
+            </div>
+            <div class="col-md-6">
+                <input type="tel" pattern="[6789][0-9]{9}" maxlength="10" name="phone" class="form-control" placeholder="Phone no" required="">
+            </div>
+            <div class="col-md-6">
+                <select name="department" id="" class="form-control" required="">
+                    <option value="" disabled selected>Select Department</option>
+                    <option value="Python">Python</option>
+                    <option value="Digital Marketing">Digital Marketing</option>
+                </select>
+            </div>
+            
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="course" placeholder="Course Completed" required="">
+            </div>
+            
+            <div class="col-md-6">
+                <input type="file" class="form-control" name="certificate" placeholder="Course Completed" required="">
+            </div>
+            
+            
+            <div class="col-md-12">
+                <textarea name="address" id="" class="form-control" placeholder="Address" required=""></textarea>
+            </div>
+            <div class="col-md-12 text-center">
+              <button type="submit">Register</button>
+            </div>
+          </div>
+        </form>
+      </div><!-- End Contact Form -->
+
+  </div>
+
+</section><!-- /Hero Section -->
+
+
+
+<script>
+    function validateEmail() {
+        let emailField = document.getElementById("w3lSender");
+        let errorMsg = document.getElementById("email-error");
+        
+        if (!emailField.value.endsWith("@gmail.com")) {
+            errorMsg.innerText = "Only Gmail addresses are allowed.";
+            return false;
+        } else {
+            errorMsg.innerText = "";
+            return true;
+        }
+    }
+</script>
+
+{% endblock %}

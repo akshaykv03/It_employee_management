@@ -1,0 +1,64 @@
+{% extends 'adminHome.html' %}
+{% block content %}
+
+<section id="hero" class="hero section dark-background contact">
+ <img src="../static/assets/img/hero-bg-admin.jpg" alt="" data-aos="fade-in">
+
+  <div class="container">
+    <div class="col-lg-12">
+
+
+        <!-- ✅ Display All Assignments -->
+      <h3 class="text-center">Team Lead Work Progress</h3>
+      <div class="table-responsive">
+      <table class="table table-bordered table-striped mt-3">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Project Name</th>
+            <th>Description</th>
+            <th>Requirement</th>
+            <th>Update</th>
+            <th>Attachment</th>
+            <th>Team Lead</th>
+            <th>Updated on</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in tlU %} {% for j in projects %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ j.title }}</td>
+            <td>{{ j.description }}</td>
+            <td>{{ i.assignment.requirements  }}</td>
+            <td>{{ i.progress_description }}</td>
+            <td>
+                {% if i.attachment %}
+                <a href="/static/media/{{ i.attachment }}" target="_blank">View</a> |
+                <a href="/static/media/{{ i.attachment }}" download>Download</a>
+                {% else %}
+                No File
+                {% endif %}
+            </td>
+            <td>{{ i.assignment.team_lead.name }}</td>
+
+            <td>{{ i.update_date }}</td>
+          </tr>
+          {% endfor %}
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center text-muted">No project update available.</td>
+          </tr>
+          
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+
+
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

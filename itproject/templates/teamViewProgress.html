@@ -1,0 +1,93 @@
+{% extends 'teamLeadHome.html' %}
+{% block content %}
+
+<section id="hero" class="hero section dark-background contact">
+ <img src="../static/assets/img/hero-bg-user.jpg" alt="" data-aos="fade-in">
+
+  <div class="container">
+    <div class="col-lg-12">
+
+    
+
+      <!-- ✅ Display All Assignments -->
+      <h3 class="text-center">Work Progress</h3>
+      <!-- <table class="table table-bordered table-striped mt-3">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Update</th>
+            <th>Attachment</th>
+            <th>Updated on</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.progress_description }}</td>
+            <td>
+    {% if i.attachment %}
+        <a href="/static/media/{{ i.attachment }}" target="_blank">View</a> |
+        <a href="/static/media/{{ i.attachment }}" download>Download</a>
+    {% else %}
+        No File
+    {% endif %}
+</td>
+
+            <td>{{ i.update_date }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center text-muted">No projects available.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table> -->
+      
+      <div class="table-responsive">
+      <table class="table table-bordered table-striped mt-3">
+         <thead>
+          <tr>
+            <th>#</th>
+            <th>Project</th>
+            <th>Description</th>
+            <th>Module</th>
+            <th>Developer</th>
+            <th>Update</th>
+            <th>Attachment</th>
+            <th>Updated on</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.assignment.project.title }}</td>
+            <td>{{ i.assignment.project.description }}</td>
+            <td>{{ i.assignment.module }}</td>
+            <td>{{ i.assignment.developer.name }}</td>
+            <td>{{ i.progress_description }}</td>
+            <td>
+                {% if i.attachment %}
+                    <a href="/static/media/{{ i.attachment }}" target="_blank">View</a> |
+                    <a href="/static/media/{{ i.attachment }}" download>Download</a>
+                {% else %}
+                    No File
+                {% endif %}
+            </td>
+            <td>{{ i.update_date }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="text-center text-muted">No projects updated.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
