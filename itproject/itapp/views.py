@@ -34,8 +34,11 @@ def teamlead_reg(request):
         if CustomUser.objects.filter(username=username).exists():
             messages.info(request,'Username already registred..')
             return redirect("/teamlead_reg")
-        elif Developer.objects.filter(Q(phone=phone)|Q(email=email)).exists() or TeamLead.objects.filter(Q(phone=phone)|Q(email=email)).exists():
-            messages.info(request,'Phone number/ email already registred..')
+        elif Developer.objects.filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
+            messages.info(request,'Phone number already registred..')
+            return redirect("/teamlead_reg")
+        elif Developer.objects.filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
+            messages.info(request,'Email already registred..')
             return redirect("/teamlead_reg")
         else:
             usr = CustomUser.objects.create_user(
@@ -73,8 +76,11 @@ def developer_reg(request):
         if CustomUser.objects.filter(username=username).exists():
             messages.info(request,'Username already registred..')
             return redirect("/developer_reg")
-        elif Developer.objects.filter(Q(phone=phone)|Q(email=email)).exists() or TeamLead.objects.filter(Q(phone=phone)|Q(email=email)).exists():
-            messages.info(request,'Phone number/ email already registred..')
+        elif Developer.objects.filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
+            messages.info(request,'Phone number already registred..')
+            return redirect("/developer_reg")
+        elif Developer.objects.filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
+            messages.info(request,'Email already registred..')
             return redirect("/developer_reg")
         else:
             usr = CustomUser.objects.create_user(
@@ -505,7 +511,7 @@ def adminAddTl(request):
             return redirect("/adminAddTl")
         else:
             usr = CustomUser.objects.create_user(
-                username=username, password=passw, is_active=0, usertype='TeamLead')
+                username=username, password=passw, is_active=1, usertype='TeamLead',approve='Approved')
             usr.save()
             par = TeamLead.objects.create(
                 name=name+" "+lname, lname=lname, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, user=usr)
@@ -541,7 +547,7 @@ def adminAddDev(request):
             return redirect("/adminAddDev")
         else:
             usr = CustomUser.objects.create_user(
-                username=username, password=passw, is_active=0, usertype='Developer')
+                username=username, password=passw, is_active=1, usertype='Developer', approve='Approved')
             usr.save()
             par = Developer.objects.create(
                 name=name+" "+lname, lname=lname, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, user=usr)
@@ -731,8 +737,11 @@ def teamProfile(request):
         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
             messages.info(request, 'Username already registered..')
             return redirect("/teamProfile")
-        elif TeamLead.objects.exclude(id=uid).filter(Q(phone=phone)|Q(email=email)).exists() or Developer.objects.filter(Q(phone=phone)|Q(email=email)).exists():
-            messages.info(request,'Phone number/ email already registered..')
+        elif TeamLead.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or Developer.objects.filter(Q(phone=phone)).exists():
+            messages.info(request,'Phone number already registered..')
+            return redirect("/teamProfile")
+        elif TeamLead.objects.exclude(id=uid).filter(Q(email=email)).exists() or Developer.objects.filter(Q(email=email)).exists():
+            messages.info(request,'Email already registered..')
             return redirect("/teamProfile")
         else:
             TeamLead.objects.filter(id=uid).update(name=name,lname=lname,username=username,email=email,phone=phone,
@@ -763,7 +772,7 @@ def teamUpdatePassword(request):
             updC.set_password(newpassword)  # ✅ call the method
             updC.save()
             messages.info(request,"Password Updated!")
-            return redirect("/teamUpdatePassword")
+            return redirect("/log_in")
         else:
             messages.info(request,"Passwords do not match!")
             return redirect("/teamUpdatePassword")
@@ -887,8 +896,11 @@ def devProfile(request):
         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
             messages.info(request, 'Username already registered..')
             return redirect("/devProfile")
-        elif Developer.objects.exclude(id=uid).filter(Q(phone=phone)|Q(email=email)).exists() or TeamLead.objects.filter(Q(phone=phone)|Q(email=email)).exists():
-            messages.info(request,'Phone number/ email already registered..')
+        elif Developer.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
+            messages.info(request,'Phone number already registered..')
+            return redirect("/devProfile")
+        elif Developer.objects.exclude(id=uid).filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
+            messages.info(request,'Email already registered..')
             return redirect("/devProfile")
         else:
             Developer.objects.filter(id=uid).update(name=name,lname=lname,username=username,email=email,phone=phone,
@@ -919,7 +931,7 @@ def devUpdatePassword(request):
             updC.set_password(newpassword)  # ✅ call the method
             updC.save()
             messages.info(request,"Password Updated!")
-            return redirect("/devUpdatePassword")
+            return redirect("/log_in")
         else:
             messages.info(request,"Passwords do not match!")
             return redirect("/devUpdatePassword")
