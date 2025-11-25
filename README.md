@@ -44,7 +44,7 @@ The IT Employee Management System helps IT companies manage employees and their 
 - Promote Developer → TL and TL → Developer.
 - Add/Remove Developers and TLs.
 - Approve or Reject new Developer registrations.
-- Dashboard notifications for new registrations and project updates.
+- Dashboard notifications for new registrations and project updates.  
 
 ---
 
