@@ -84,5 +84,5 @@ Follow these steps to run the project locally:
 
 ## ✅ 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/IT-Employee-Management.git
-cd IT-Employee-Management
+git clone https://github.com/akshaykv03/It_employee_management.git
+cd It_employee_management
