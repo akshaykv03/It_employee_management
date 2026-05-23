@@ -94,6 +94,7 @@ gruut-lang-de==2.0.1
 gruut-lang-en==2.0.1
 gruut-lang-es==2.0.1
 gruut-lang-fr==2.0.2
+gunicorn==26.0.0
 h11==0.16.0
 h5py==3.12.1
 hangul-romanize==0.1.0

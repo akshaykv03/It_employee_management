@@ -834,6 +834,21 @@ def teamProfile(request):
         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
             messages.info(request, 'Username already registered..')
             return redirect("/teamProfile")
+<<<<<<< HEAD
+=======
+        elif TeamLead.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or Developer.objects.filter(Q(phone=phone)).exists():
+            messages.info(request,'Phone number already registered..')
+            return redirect("/teamProfile")
+        elif TeamLead.objects.exclude(id=uid).filter(Q(email=email)).exists() or Developer.objects.filter(Q(email=email)).exists():
+            messages.info(request,'Email already registered..')
+            return redirect("/teamProfile")
+        else:
+            TeamLead.objects.filter(id=uid).update(name=name,lname=lname,username=username,email=email,phone=phone,
+                department=dept,course_completed=course,address=address)
+            # updC=CustomUser.objects.get(id=data.user.id)
+            # updC.set_password(password)  # ✅ call the method
+            # updC.save()
+>>>>>>> bf41c2dff3fa71050a0f289347db32765c90e7e1
 
         elif TeamLead.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or Developer.objects.filter(Q(phone=phone)).exists():
             messages.info(request,'Phone number already registered..')
@@ -1180,6 +1195,21 @@ def devProfile(request):
         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
             messages.info(request, 'Username already registered..')
             return redirect("/devProfile")
+<<<<<<< HEAD
+=======
+        elif Developer.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
+            messages.info(request,'Phone number already registered..')
+            return redirect("/devProfile")
+        elif Developer.objects.exclude(id=uid).filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
+            messages.info(request,'Email already registered..')
+            return redirect("/devProfile")
+        else:
+            Developer.objects.filter(id=uid).update(name=name,lname=lname,username=username,email=email,phone=phone,
+                department=dept,course_completed=course,address=address)
+            # updC=CustomUser.objects.get(id=data.user.id)
+            # updC.set_password(password)  # ✅ call the method
+            # updC.save()
+>>>>>>> bf41c2dff3fa71050a0f289347db32765c90e7e1
 
         elif Developer.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
             messages.info(request,'Phone number already registered..')
