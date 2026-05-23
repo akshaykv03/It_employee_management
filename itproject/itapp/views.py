@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 
 # Create your views here.
@@ -29,20 +30,28 @@ def teamlead_reg(request):
         department = request.POST['department']
         course = request.POST['course']
         certificate = request.FILES['certificate']
+        photo = request.FILES['photo']
         address = request.POST['address']
         passw = get_random_string(length=6, allowed_chars='1234567890')
         if CustomUser.objects.filter(username=username).exists():
             messages.info(request,'Username already registred..')
             return redirect("/teamlead_reg")
-        elif Developer.objects.filter(Q(phone=phone)|Q(email=email)).exists() or TeamLead.objects.filter(Q(phone=phone)|Q(email=email)).exists():
-            messages.info(request,'Phone number/ email already registred..')
+        elif Developer.objects.filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
+            messages.info(request,'Phone number already registred..')
+            return redirect("/teamlead_reg")
+        elif Developer.objects.filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
+            messages.info(request,'Email already registred..')
             return redirect("/teamlead_reg")
         else:
             usr = CustomUser.objects.create_user(
                 username=username, password=passw, is_active=0, usertype='TeamLead')
             usr.save()
-            par = TeamLead.objects.create(
-                name=name+" "+lname, lname=lname, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, user=usr)
+            if lname:
+                par = TeamLead.objects.create(
+                    name=name, lname=lname, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, photo=photo, user=usr)
+            else:
+                par = TeamLead.objects.create(
+                    name=name, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, photo=photo, user=usr)
             par.save()
             messages.info(request,"Regisgtered Successfully.. Password sent to your email..")
             subject = "Your Password for Login"
@@ -68,20 +77,28 @@ def developer_reg(request):
         department = request.POST['department']
         course = request.POST['course']
         certificate = request.FILES['certificate']
+        photo = request.FILES['photo']
         address = request.POST['address']
         passw = get_random_string(length=6, allowed_chars='1234567890')
         if CustomUser.objects.filter(username=username).exists():
             messages.info(request,'Username already registred..')
             return redirect("/developer_reg")
-        elif Developer.objects.filter(Q(phone=phone)|Q(email=email)).exists() or TeamLead.objects.filter(Q(phone=phone)|Q(email=email)).exists():
-            messages.info(request,'Phone number/ email already registred..')
+        elif Developer.objects.filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
+            messages.info(request,'Phone number already registred..')
+            return redirect("/developer_reg")
+        elif Developer.objects.filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
+            messages.info(request,'Email already registred..')
             return redirect("/developer_reg")
         else:
             usr = CustomUser.objects.create_user(
                 username=username, password=passw, is_active=0, usertype='Developer')
             usr.save()
-            par = Developer.objects.create(
-                name=name+" "+lname, lname=lname, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, user=usr)
+            if lname:
+                 par = Developer.objects.create(
+                name=name, lname=lname, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, photo=photo, user=usr)
+            else:
+                par = Developer.objects.create(
+                    name=name, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, photo=photo, user=usr)
             par.save()
             messages.info(request,"Regisgtered Successfully.. Password sent to your email..")
             subject = "Your Password for Login"
@@ -417,6 +434,7 @@ def adminEditProject(request):
         "team_leads": team_leads
     })
 
+
 def adminAssignProject(request):
     team_leads = TeamLead.objects.filter(user__is_active=True).order_by("-id")
     projects = Project.objects.all().order_by("-id")  # Fetch all projects
@@ -432,18 +450,26 @@ def adminAssignProject(request):
 
         project = Project.objects.get(id=project)
         team_lead = TeamLead.objects.get(id=lead_id)
+        if datetime.strptime(start_date, "%Y-%m-%d").date()>=project.start_date and datetime.strptime(start_date, "%Y-%m-%d").date()<=project.end_date :
+            if datetime.strptime(end_date, "%Y-%m-%d").date()<=project.end_date and datetime.strptime(end_date, "%Y-%m-%d").date()>=project.start_date:
 
-        AssignTeamLead.objects.create(
-            requirements=requirements,
-            start_date=start_date,
-            end_date=end_date,
-            attachment=attachment,
-            team_lead=team_lead,
-            project=project
-        )
+                AssignTeamLead.objects.create(
+                    requirements=requirements,
+                    start_date=start_date,
+                    end_date=end_date,
+                    attachment=attachment,
+                    team_lead=team_lead,
+                    project=project
+                )
 
-        messages.success(request, "Project Assigned Successfully!")
-        return redirect('/adminAssignProject')
+                messages.success(request, "Project Assigned Successfully!")
+                return redirect('/adminAssignProject')
+            else:
+                messages.success(request, "end date not between project start and end date!")
+                return redirect('/adminAssignProject')
+        else:
+                messages.success(request, "start date not between project start and end date!")
+                return redirect('/adminAssignProject')
 
     return render(request, 'adminAssignProject.html', {
         "team_leads": team_leads,
@@ -495,6 +521,7 @@ def adminAddTl(request):
         department = request.POST['department']
         course = request.POST['course']
         certificate = request.FILES['certificate']
+        photo = request.FILES['photo']
         address = request.POST['address']
         passw = get_random_string(length=6, allowed_chars='1234567890')
         if CustomUser.objects.filter(username=username).exists():
@@ -505,10 +532,14 @@ def adminAddTl(request):
             return redirect("/adminAddTl")
         else:
             usr = CustomUser.objects.create_user(
-                username=username, password=passw, is_active=0, usertype='TeamLead')
+                username=username, password=passw, is_active=1, usertype='TeamLead',approve='Approved')
             usr.save()
-            par = TeamLead.objects.create(
-                name=name+" "+lname, lname=lname, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, user=usr)
+            if lname:
+                par = TeamLead.objects.create(
+                    name=name, lname=lname, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, photo=photo, user=usr)
+            else:
+                par = TeamLead.objects.create(
+                    name=name, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, photo=photo, user=usr)
             par.save()
             messages.info(request,"Regisgtered Successfully.. Password sent to team lead email..")
             subject = "Your Password for Login"
@@ -531,6 +562,7 @@ def adminAddDev(request):
         department = request.POST['department']
         course = request.POST['course']
         certificate = request.FILES['certificate']
+        photo = request.FILES['photo']
         address = request.POST['address']
         passw = get_random_string(length=6, allowed_chars='1234567890')
         if CustomUser.objects.filter(username=username).exists():
@@ -541,10 +573,14 @@ def adminAddDev(request):
             return redirect("/adminAddDev")
         else:
             usr = CustomUser.objects.create_user(
-                username=username, password=passw, is_active=0, usertype='Developer')
+                username=username, password=passw, is_active=1, usertype='Developer', approve='Approved')
             usr.save()
-            par = Developer.objects.create(
-                name=name+" "+lname, lname=lname, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, user=usr)
+            if lname:
+                 par = Developer.objects.create(
+                name=name, lname=lname, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, photo=photo, user=usr)
+            else:
+                par = Developer.objects.create(
+                    name=name, username=username, email=email, phone=phone, department=department, course_completed=course, address=address, certificate=certificate, photo=photo, user=usr)
             par.save()
             messages.info(request,"Regisgtered Successfully.. Password sent to developer email..")
             subject = "Your Password for Login"
@@ -555,6 +591,24 @@ def adminAddDev(request):
    else:
         return render(request, 'adminAddDev.html', {"msg": msg})
 
+
+def adminDeleteTl(request):
+    id=request.GET['id']
+    tl=TeamLead.objects.get(id=id)
+    user=tl.user
+    tl.delete()
+    user.delete()
+    messages.info(request,"Team Lead Deleted Successfully!")
+    return redirect('/adminTeamLead')
+
+def adminDeleteDev(request):
+    id=request.GET['id']
+    dev=Developer.objects.get(id=id)
+    user=dev.user
+    dev.delete()
+    user.delete()
+    messages.info(request,"Developer Deleted Successfully!")
+    return redirect('/adminDeveloper')
 
 
 
@@ -676,19 +730,30 @@ def teamAssign(request):
         end_date = request.POST['end_date']
         project=Project.objects.get(id=project_id)
         developer=Developer.objects.get(id=developer_id)
-        assign=Assignment.objects.create(
-            project=project,
-            developer=developer,
-            module=module,
-            attachment=attachment,
-            description=description,
-            team_lead=lead,
-            start_date=start_date,
-            end_date=end_date
-        )
-        assign.save()
-        messages.info(request,"Project Assigned Successfully..")
-        return redirect('/teamAssign')
+        assTl=AssignTeamLead.objects.get(project_id=project_id,team_lead=lead)
+
+        if datetime.strptime(start_date, "%Y-%m-%d").date()>=assTl.start_date and datetime.strptime(start_date, "%Y-%m-%d").date()<=assTl.end_date :
+            if datetime.strptime(end_date, "%Y-%m-%d").date()<=assTl.end_date and datetime.strptime(end_date, "%Y-%m-%d").date()>=assTl.start_date:
+
+                assign=Assignment.objects.create(
+                    project=project,
+                    developer=developer,
+                    module=module,
+                    attachment=attachment,
+                    description=description,
+                    team_lead=lead,
+                    start_date=start_date,
+                    end_date=end_date
+                )
+                assign.save()
+                messages.info(request,"Project Assigned Successfully..")
+                return redirect('/teamAssign')
+            else:
+                messages.success(request, "end date not between project start and end date!")
+                return redirect('/teamAssign')
+        else:
+                messages.success(request, "start date not between project start and end date!")
+                return redirect('/teamAssign')
     return render(request, 'teamAssign.html', {"data": data, "dev": dev,
                                                 "assignments": assignments
                                                 })
@@ -711,39 +776,89 @@ def teamViewProgress(request):
     data=AssignmentUpdate.objects.filter(assignment=id).order_by("-id")
     return render(request, 'teamViewProgress.html', {"data": data})
 
-def teamProfile(request):
-    uid=request.session['id']
-    data=TeamLead.objects.get(id=uid)
-    cus=data.user
-    passw=cus.password
+# def teamProfile(request):
+#     uid=request.session['id']
+#     data=TeamLead.objects.get(id=uid)
+#     cus=data.user
+#     passw=cus.password
   
 
-    if request.POST:
-        name = request.POST['name']
-        lname = request.POST['lname']
-        username = request.POST['username']
-        email = request.POST['email']
-        phone = request.POST['phone']
-        dept = request.POST['dept']
-        course = request.POST['course']
-        # password=request.POST['password']
-        address = request.POST['address']
+#     if request.POST:
+#         name = request.POST['name']
+#         lname = request.POST['lname']
+#         username = request.POST['username']
+#         email = request.POST['email']
+#         phone = request.POST['phone']
+#         dept = request.POST['dept']
+#         course = request.POST['course']
+#         # password=request.POST['password']
+#         address = request.POST['address']
+#         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
+#             messages.info(request, 'Username already registered..')
+#             return redirect("/teamProfile")
+#         elif TeamLead.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or Developer.objects.filter(Q(phone=phone)).exists():
+#             messages.info(request,'Phone number already registered..')
+#             return redirect("/teamProfile")
+#         elif TeamLead.objects.exclude(id=uid).filter(Q(email=email)).exists() or Developer.objects.filter(Q(email=email)).exists():
+#             messages.info(request,'Email already registered..')
+#             return redirect("/teamProfile")
+#         else:
+#             TeamLead.objects.filter(id=uid).update(name=name,lname=lname,username=username,email=email,phone=phone,
+#                 department=dept,course_completed=course,address=address)
+#             # updC=CustomUser.objects.get(id=data.user.id)
+#             # updC.set_password(password)  # ✅ call the method
+#             # updC.save()
+
+#             messages.info(request,"Profile Updated!")
+#             return redirect("/teamProfile")
+#     return render(request,"teamProfile.html",{"data":[data],"passw":passw})
+
+
+def teamProfile(request):
+    uid = request.session['id']
+    data = TeamLead.objects.get(id=uid)
+    cus = data.user
+    passw = cus.password
+
+    if request.method == "POST":
+        name = request.POST.get('name')
+        lname = request.POST.get('lname')   # ✅ optional
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        dept = request.POST.get('dept')
+        course = request.POST.get('course')
+        address = request.POST.get('address')
+
+        # VALIDATIONS
         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
             messages.info(request, 'Username already registered..')
             return redirect("/teamProfile")
-        elif TeamLead.objects.exclude(id=uid).filter(Q(phone=phone)|Q(email=email)).exists() or Developer.objects.filter(Q(phone=phone)|Q(email=email)).exists():
-            messages.info(request,'Phone number/ email already registered..')
-            return redirect("/teamProfile")
-        else:
-            TeamLead.objects.filter(id=uid).update(name=name,lname=lname,username=username,email=email,phone=phone,
-                department=dept,course_completed=course,address=address)
-            # updC=CustomUser.objects.get(id=data.user.id)
-            # updC.set_password(password)  # ✅ call the method
-            # updC.save()
 
-            messages.info(request,"Profile Updated!")
+        elif TeamLead.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or Developer.objects.filter(Q(phone=phone)).exists():
+            messages.info(request,'Phone number already registered..')
             return redirect("/teamProfile")
-    return render(request,"teamProfile.html",{"data":[data],"passw":passw})
+
+        elif TeamLead.objects.exclude(id=uid).filter(Q(email=email)).exists() or Developer.objects.filter(Q(email=email)).exists():
+            messages.info(request,'Email already registered..')
+            return redirect("/teamProfile")
+
+        else:
+            TeamLead.objects.filter(id=uid).update(
+                name=name,
+                lname=lname if lname else None,   # ✅ OPTIONAL FIX
+                username=username,
+                email=email,
+                phone=phone,
+                department=dept,
+                course_completed=course,
+                address=address
+            )
+
+            messages.success(request, "Profile Updated!")
+            return redirect("/teamProfile")
+
+    return render(request, "teamProfile.html", {"data": [data], "passw": passw})
 
 def teamUpdatePassword(request):
     uid=request.session['id']
@@ -763,7 +878,7 @@ def teamUpdatePassword(request):
             updC.set_password(newpassword)  # ✅ call the method
             updC.save()
             messages.info(request,"Password Updated!")
-            return redirect("/teamUpdatePassword")
+            return redirect("/log_in")
         else:
             messages.info(request,"Passwords do not match!")
             return redirect("/teamUpdatePassword")
@@ -771,6 +886,78 @@ def teamUpdatePassword(request):
         messages.info(request,"Password Updated!")
         return redirect("/teamUpdatePassword")
     return render(request,"teamUpdatePassword.html",{"data":[data],"passw":passw})
+
+
+def teamChat(request):
+    uid=request.session['id']
+    lead=TeamLead.objects.get(id=uid)
+    dev=Developer.objects.filter(team_lead=lead).order_by("-id")
+    chat=[]  # placeholder for chat records to be implemented
+    return render(request, 'teamChat.html', {"dev": dev, "chat": chat})
+
+
+
+from datetime import datetime
+
+def teamlead_chat(request):
+    dev_id = request.GET.get("id")
+    developer = Developer.objects.get(id=dev_id)
+
+    teamlead = TeamLead.objects.get(user=request.user)
+
+    chats = DevChat.objects.filter(
+        teamlead=teamlead,
+        developer=developer
+    ).order_by("created_at")
+
+    if request.method == "POST":
+        message = request.POST.get("message")
+        image = request.FILES.get("image")
+
+        DevChat.objects.create(
+            teamlead=teamlead,
+            developer=developer,
+            sender="teamlead",
+            message=message,
+            image=image
+        )
+
+    return render(request, "teamleadChat.html", {
+        "developer": developer,
+        "chats": chats
+    })
+
+def teamMeet(request):
+    uid=request.session['id']
+    lead=TeamLead.objects.get(id=uid)
+
+    data = TeamMeet.objects.filter(team_lead=lead).order_by("-id")
+
+    if request.method == "POST":
+        subject = request.POST.get("subject")
+        meet_link = request.POST.get("meet_link")
+        description = request.POST.get("description")
+
+        meeting = TeamMeet.objects.create(
+            team_lead=lead,
+            subject=subject,
+            meet_link=meet_link,
+            description=description
+        )
+        meeting.save()
+        messages.info(request, "Meeting Scheduled Successfully!")
+        return redirect('/teamMeet')
+    return render(request, 'teamMeet.html', {"data": data})
+
+
+
+
+
+
+
+
+
+
 
 @login_required(login_url='/log_in')
 def developerHome(request):
@@ -867,39 +1054,159 @@ def devHistory(request):
 
     return render(request, 'devHistory.html', {"data": data, "name": name})
 
-def devProfile(request):
-    uid=request.session['id']
-    data=Developer.objects.get(id=uid)
-    cus=data.user
-    passw=cus.password
+# def devProfile(request):
+#     uid=request.session['id']
+#     data=Developer.objects.get(id=uid)
+#     cus=data.user
+#     passw=cus.password
   
 
-    if request.POST:
-        name = request.POST['name']
-        lname = request.POST['lname']
-        username = request.POST['username']
-        email = request.POST['email']
-        phone = request.POST['phone']
-        dept = request.POST['dept']
-        course = request.POST['course']
-        # password=request.POST['password']
-        address = request.POST['address']
+#     if request.POST:
+#         name = request.POST['name']
+#         lname = request.POST['lname']
+#         username = request.POST['username']
+#         email = request.POST['email']
+#         phone = request.POST['phone']
+#         dept = request.POST['dept']
+#         course = request.POST['course']
+#         photo = request.FILES['photo']
+#         # password=request.POST['password']
+#         address = request.POST['address']
+#         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
+#             messages.info(request, 'Username already registered..')
+#             return redirect("/devProfile")
+#         elif Developer.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
+#             messages.info(request,'Phone number already registered..')
+#             return redirect("/devProfile")
+#         elif Developer.objects.exclude(id=uid).filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
+#             messages.info(request,'Email already registered..')
+#             return redirect("/devProfile")
+#         else:
+#             if lname:
+#                 Developer.objects.filter(id=uid).update(name=name,lname=lname,username=username,email=email,phone=phone,
+#                 department=dept,course_completed=course,address=address,photo=photo)
+#             else:
+#                 Developer.objects.filter(id=uid).update(name=name,username=username,email=email,phone=phone,
+#                 department=dept,course_completed=course,address=address,photo=photo)
+#             # updC=CustomUser.objects.get(id=data.user.id)
+#             # updC.set_password(password)  # ✅ call the method
+#             # updC.save()
+
+#             messages.info(request,"Profile Updated!")
+#             return redirect("/devProfile")
+#     return render(request,"devProfile.html",{"data":[data],"passw":passw})
+
+# def devProfile(request):
+#     uid = request.session['id']
+#     data = Developer.objects.get(id=uid)
+#     cus = data.user
+#     passw = cus.password
+
+#     if request.method == "POST":
+#         name = request.POST.get('name')
+#         lname = request.POST.get('lname')   # optional
+#         username = request.POST.get('username')
+#         email = request.POST.get('email')
+#         phone = request.POST.get('phone')
+#         dept = request.POST.get('dept')
+#         course = request.POST.get('course')
+#         address = request.POST.get('address')
+
+#         photo = request.FILES.get('photo')  # ✅ safe optional
+
+#         # validations
+#         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
+#             messages.info(request, 'Username already registered..')
+#             return redirect("/devProfile")
+
+#         elif Developer.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
+#             messages.info(request,'Phone number already registered..')
+#             return redirect("/devProfile")
+
+#         elif Developer.objects.exclude(id=uid).filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
+#             messages.info(request,'Email already registered..')
+#             return redirect("/devProfile")
+
+#         else:
+#             update_data = {
+#                 "name": name,
+#                 "username": username,
+#                 "email": email,
+#                 "phone": phone,
+#                 "department": dept,
+#                 "course_completed": course,
+#                 "address": address
+#             }
+
+#             # ✅ optional lname
+#             if lname:
+#                 update_data["lname"] = lname
+
+#             # ✅ optional photo
+#             if photo:
+#                 update_data["photo"] = photo
+
+#             Developer.objects.filter(id=uid).update(**update_data)
+
+#             messages.info(request, "Profile Updated!")
+#             return redirect("/devProfile")
+
+#     return render(request, "devProfile.html", {"data": [data], "passw": passw})
+
+
+
+from django.db.models import Q
+from django.contrib import messages
+
+def devProfile(request):
+    uid = request.session['id']
+    data = Developer.objects.get(id=uid)
+    cus = data.user
+    passw = cus.password
+
+    if request.method == "POST":
+        name = request.POST.get('name')
+        lname = request.POST.get('lname')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        dept = request.POST.get('dept')
+        course = request.POST.get('course')
+        address = request.POST.get('address')
+
+        photo = request.FILES.get('photo')
+
+        # VALIDATIONS
         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
             messages.info(request, 'Username already registered..')
             return redirect("/devProfile")
-        elif Developer.objects.exclude(id=uid).filter(Q(phone=phone)|Q(email=email)).exists() or TeamLead.objects.filter(Q(phone=phone)|Q(email=email)).exists():
-            messages.info(request,'Phone number/ email already registered..')
-            return redirect("/devProfile")
-        else:
-            Developer.objects.filter(id=uid).update(name=name,lname=lname,username=username,email=email,phone=phone,
-                department=dept,course_completed=course,address=address)
-            # updC=CustomUser.objects.get(id=data.user.id)
-            # updC.set_password(password)  # ✅ call the method
-            # updC.save()
 
-            messages.info(request,"Profile Updated!")
+        elif Developer.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
+            messages.info(request,'Phone number already registered..')
             return redirect("/devProfile")
-    return render(request,"devProfile.html",{"data":[data],"passw":passw})
+
+        elif Developer.objects.exclude(id=uid).filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
+            messages.info(request,'Email already registered..')
+            return redirect("/devProfile")
+
+        else:
+            Developer.objects.filter(id=uid).update(
+                name=name,
+                lname=lname if lname else None,  # ✅ OPTIONAL FIX
+                username=username,
+                email=email,
+                phone=phone,
+                department=dept,
+                course_completed=course,
+                address=address,
+                photo=photo if photo else data.photo  # ✅ keep old photo
+            )
+
+            messages.success(request, "Profile Updated!")
+            return redirect("/devProfile")
+
+    return render(request, "devProfile.html", {"data": [data], "passw": passw})
+
 
 def devUpdatePassword(request):
     uid=request.session['id']
@@ -919,9 +1226,65 @@ def devUpdatePassword(request):
             updC.set_password(newpassword)  # ✅ call the method
             updC.save()
             messages.info(request,"Password Updated!")
-            return redirect("/devUpdatePassword")
+            return redirect("/log_in")
         else:
             messages.info(request,"Passwords do not match!")
             return redirect("/devUpdatePassword")
 
     return render(request,"devUpdatePassword.html",{"data":[data],"passw":passw})
+
+
+
+def devChat(request):
+    uid = request.session['id']
+    
+    developer = Developer.objects.get(id=uid)
+    lead = developer.team_lead
+
+    dev = []
+    if lead:
+        dev = [lead]   # convert to list so template loop works
+
+    return render(request, 'devChat.html', {
+        "dev": dev
+    })
+
+
+
+def user_chat(request):
+    lead_id = request.GET.get("id")
+
+    teamlead = TeamLead.objects.get(id=lead_id)
+    developer = Developer.objects.get(id=request.session['id'])
+
+    chats = DevChat.objects.filter(
+        teamlead=teamlead,
+        developer=developer
+    ).order_by("created_at")
+
+    if request.method == "POST":
+        message = request.POST.get("message")
+        image = request.FILES.get("image")
+
+        DevChat.objects.create(
+            teamlead=teamlead,
+            developer=developer,
+            sender="developer",   # 🔥 important
+            message=message,
+            image=image
+        )
+
+    return render(request, "userChat.html", {
+        "teamlead": teamlead,
+        "chats": chats
+    })
+
+
+def devMeet(request):
+    uid=request.session['id']
+    developer=Developer.objects.get(id=uid)
+    lead=developer.team_lead
+
+    data = TeamMeet.objects.filter(team_lead=lead).order_by("-id")
+
+    return render(request, 'devMeet.html', {"data": data})

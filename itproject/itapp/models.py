@@ -22,6 +22,7 @@ class Developer(models.Model):
     address = models.TextField()
     certificate = models.FileField(upload_to='developer_proofs/', null=True, blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    photo = models.FileField(upload_to='developer_photos/', null=True, blank=True)
     team_lead = models.ForeignKey('TeamLead', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -37,6 +38,7 @@ class TeamLead(models.Model):
     course_completed = models.CharField(max_length=200)
     address = models.TextField()
     certificate = models.FileField(upload_to='teamlead_proofs/', null=True, blank=True)
+    photo = models.FileField(upload_to='teamlead_photos/', null=True, blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -106,3 +108,29 @@ class AssignTLupdate(models.Model):
 
     def __str__(self):
         return f"Update for {self.assigntl.project.title} by {self.assigntl.team_lead.name}"
+    
+
+
+class DevChat(models.Model):
+    teamlead = models.ForeignKey(TeamLead, on_delete=models.CASCADE)
+    developer = models.ForeignKey(Developer, on_delete=models.CASCADE)
+
+    sender = models.CharField(max_length=20)  # "teamlead" or "developer"
+    message = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to="chat_images/", null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.teamlead} - {self.developer}"
+    
+
+class TeamMeet(models.Model):
+    team_lead = models.ForeignKey(TeamLead, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=200)
+    meet_link = models.CharField(max_length=500)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.subject} - {self.team_lead.name}"

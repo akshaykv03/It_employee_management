@@ -36,6 +36,8 @@ urlpatterns = [
     path('adminViewProject', views.adminViewProject, name='adminViewProject'),
     path('adminAssignProject', views.adminAssignProject, name='adminAssignProject'),
     path('adminViewAssPrj', views.adminViewAssPrj, name='adminViewAssPrj'),
+    path('adminDeleteTl', views.adminDeleteTl, name='adminDeleteTl'),
+    path('adminDeleteDev', views.adminDeleteDev, name='adminDeleteDev'),
 
     path('clear-notifications/', views.clear_notifications, name='clear_notifications'),
     path('clear_devnotifications/', views.clear_devnotifications, name='clear_devnotifications'),
@@ -68,7 +70,9 @@ urlpatterns = [
     path('teamViewProgress', views.teamViewProgress, name='teamViewProgress'),
     path('teamProfile', views.teamProfile, name='teamProfile'),
     path('teamUpdatePassword', views.teamUpdatePassword, name='teamUpdatePassword'),
-    path('teamViewProgress', views.teamViewProgress, name='teamViewProgress'),
+    path('teamChat', views.teamChat, name='teamChat'),
+    path("teamlead_chat/", views.teamlead_chat, name="teamlead_chat"),
+    path("teamMeet/", views.teamMeet, name="teamMeet"),
 
     path('developerHome', views.developerHome, name='developerHome'),
     path('devNotifications', views.devNotifications, name='devNotifications'),
@@ -78,6 +82,9 @@ urlpatterns = [
     path('devUpdate', views.devUpdate, name='devUpdate'),
     path('devProfile', views.devProfile, name='devProfile'),
     path('devUpdatePassword', views.devUpdatePassword, name='devUpdatePassword'),
+    path('devChat', views.devChat, name='devChat'),
+    path('user_chat', views.user_chat, name='user_chat'),
+    path('devMeet', views.devMeet, name='devMeet'),
 
 ]
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2025 at 01:23 PM
+-- Generation Time: Nov 24, 2025 at 06:40 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.28
 
@@ -249,6 +249,7 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 ('ftg8p6s5oe3loc8ofuu1nbcjcrns81a0', '.eJxVjjkOwjAURO_iGlnecSjpOYP1FxsHUCLFSYW4O7GUAtp5M0_zFgm2taat5SWNLC4iiNNvhkDPPHXAD5jus6R5WpcRZa_IgzZ5mzm_rkf3T1Ch1X2tAY1F7zQZxaA9GiRSZws2FozaKdZMcQgDF2UdOC568Db64NkTRdql_Z77fAFzmDmZ:1vJRft:EFlYp6rAnK5GZcle66bq7NpQ1WuXmZUTjGNsriorRwA', '2025-11-27 07:23:21.280595'),
 ('iwsyfvc1sylso7k2c76lsj65rvoni2eo', '.eJxVjDsOwjAQRO_iGlm21x9MSc8ZrM2ugwPIkeKkQtydWEoBzRTz3sxbJNzWkraWlzSxuAgrTr_dgPTMtQN-YL3Pkua6LtMguyIP2uRt5vy6Hu7fQcFW9rV3hC6QMYope-IRrMUIkSKCRa8AdLSmB7vAThvjIKsd0lkFPWrx-QLTiTbW:1vM3Fa:FDtLB48jfm12PuEpvy4XRlzGomrJskKvA78EKkLXlqc', '2025-12-04 11:54:58.038117'),
 ('krekimhj1sq1iczylfbym5sv2um7arpb', '.eJxVjDsOwjAQRO_iGlm21x9MSc8ZrM2ugwPIkeKkQtydWEoBzRTz3sxbJNzWkraWlzSxuAgrTr_dgPTMtQN-YL3Pkua6LtMguyIP2uRt5vy6Hu7fQcFW9rV3hC6QMYope-IRrMUIkSKCRa8AdLSmB7vAThvjIKsd0lkFPWrx-QLTiTbW:1vJWH2:nLjH3z_NRSJ-Qcxeo0zMdGS3upAD9uD4AvPr9RVopU4', '2025-11-27 12:18:00.563256'),
+('p8bu2hjamnavbi426da3wxl3n3zzeix0', '.eJxVjjsOwjAQRO_iGlnZdeIPJX3OYNm7Cw6gRIqTCnF3sJQC2nkzT_NSMe1biXuVNU6szgpRnX7DnOghcyN8T_Nt0bTM2zpl3Sr6oFWPC8vzcnT_BCXV0tbZikUm8IMHNwRxQEg29dgJZwLwHSGbQP3VZovBe-izOMNORMDQV9r-gXl_ANF1OhM:1vNOwB:nHHUbnI12SsEmzBERFKsGCAFVbolTol0Srj927hWwmE', '2025-12-08 05:16:31.472779'),
 ('pmlmdg0fb3c5npp07zttd9ylh21yt5py', 'eyJpZCI6NH0:1vCFs9:CU421y2k4TZUyH4JB6TmhCIWsNUA1a2im1nylAgndpw', '2025-11-07 11:22:17.038261'),
 ('r1nggr9nn8jh6w01boa6yhy7dizt7i50', '.eJxVjDsOwjAQRO-ydWT5m-CU9JwAIWuzdogB2VLsVIi7E0tp0kwx7818IXoYRQclhORSrnGOhDXmVGC8y0cHDre6uK2E1TUVNJy6CekdUgP-hemZGeVU1zixprCDFnbLPnyuh3s6WLAs-7o3hGYgKbmn0JOfldZolSWLSmPPlRJWyxbeDN4IKY0KfId04YOYBfz-s8FBlg:1vJ9p6:2py3WbzG8-Yk20uWs4p_NdGmcCwYWE5FPVJo7QOVqzY', '2025-11-26 12:19:40.674495'),
 ('r8l0trs42xa2jb8bh82v01m8wqqe0en2', '.eJxVjkEOwiAURO_C2hCg_AIu3fcMhP-hUjWQlHZlvLsl6UK382Ym78182Lfs95ZWv0R2ZZJdfjMM9Eylg_gI5V451bKtC_Je4SdtfKoxvW5n9-8gh5aPNQmrB22N0iMMAHFI1s3oQAC6g6CMOCsDkExE5aQlA2a0JJAUGIvdquvJzxc3LTh3:1vLgGB:QGz781ow-NYgGRyOZL7UcBIVU-hUJ8YJbDqys4R09E4', '2025-12-03 11:22:03.810060');
@@ -412,7 +413,7 @@ INSERT INTO `itapp_customuser` (`id`, `password`, `last_login`, `is_superuser`, 
 (1, 'pbkdf2_sha256$600000$kvqM07TiwftfxNZTxcIKpB$xlqRkwmIsX26BnyaiQH+bQu9vNaI1O0HImjZiJtG5Jg=', '2025-11-20 08:48:15.941303', 0, 'aa@gmail.com', '', '', '', 0, 1, '2025-10-22 09:15:01.651543', 'TeamLead', 'Approved'),
 (2, 'pbkdf2_sha256$320000$GMNCfjZWQNYsWjMbJGk2o3$SYLqvCRcZbegnLHSgvUuG9NQ+L75eoQv18H56wcBvJQ=', NULL, 0, 'akshaykv711@gmail.com', '', '', '', 0, 1, '2025-10-22 09:15:58.053520', 'TeamLead', 'Approved'),
 (3, 'pbkdf2_sha256$320000$NZK3ZFT431NVG8TFYD3QzX$+oY/5hSpRcpU89p67qxqKYz+KnXbkgM8OvDojtfBb4M=', NULL, 0, 'akshaykv534@gmail.com', '', '', '', 0, 1, '2025-10-22 09:25:41.491167', 'Developer', 'Approved'),
-(4, 'pbkdf2_sha256$600000$GU7gMQKWmboltuv2HIXPOa$TPXqQqCg3xw2pCXAkkcFBQTYasL/7oxbgZktE8rN4mU=', '2025-11-20 11:54:58.030095', 1, 'admin', '', '', '', 1, 1, '2025-10-22 09:35:49.710737', '', 'Pending'),
+(4, 'pbkdf2_sha256$600000$GU7gMQKWmboltuv2HIXPOa$TPXqQqCg3xw2pCXAkkcFBQTYasL/7oxbgZktE8rN4mU=', '2025-11-24 04:58:43.099163', 1, 'admin', '', '', '', 1, 1, '2025-10-22 09:35:49.710737', '', 'Pending'),
 (6, 'pbkdf2_sha256$600000$aKzN1p1bX7xqJro6egerfX$xD0Ly6yJf8aVhLuSJvxixOBvb7l7nIuzTUHIJuadU0I=', '2025-11-20 09:05:15.167731', 0, 'cc@gmail.com', '', '', '', 0, 1, '2025-10-24 04:17:00.069983', 'Developer', 'Approved'),
 (7, 'pbkdf2_sha256$320000$AFKnioL8HjwKMgxbyFiGSr$W6LCBUQezwQl6qDu0Lq7YIosaao4tLTYuSLyqBLZeRU=', NULL, 0, 'dd@mail.com', '', '', '', 0, 1, '2025-10-24 10:58:46.484359', 'TeamLead', 'Approved'),
 (8, 'pbkdf2_sha256$320000$ub57I1sWNYB3J9eyYtXIVA$Lef10W47iHw8aX2BfxbW5pDHRH7Rc8JVWXDaJo/LgLA=', NULL, 0, 'akshaykv711@mail.com', '', '', '', 0, 0, '2025-10-24 11:00:12.013252', 'TeamLead', 'Rejected'),
@@ -429,8 +430,12 @@ INSERT INTO `itapp_customuser` (`id`, `password`, `last_login`, `is_superuser`, 
 (19, 'pbkdf2_sha256$600000$8VUMiv0zyciFNh3pZZrXdm$STwBL+VXIk+sURmdncngtfF3hVXY/ovaOucfsUvMs3s=', '2025-11-13 12:16:27.351726', 0, 'oo@gmail.com', '', '', '', 0, 1, '2025-11-13 12:04:36.942008', 'Developer', 'Approved'),
 (20, 'pbkdf2_sha256$600000$VWAhETrBFa0VTr3knUFLH6$q7A6qCJfU9qYkbAfUW5uktnSy2+qbkVClgw2Yv+ZQuA=', NULL, 0, 'kk@gmail.com', '', '', '', 0, 0, '2025-11-20 07:11:29.186123', 'TeamLead', 'Pending'),
 (21, 'pbkdf2_sha256$600000$XsoFqJ89QYcdLmgT3jug6H$a4pEiSl2opLB4UdCG2FmLXXQp4Hre5QkiL9UNRAa0R8=', '2025-11-20 07:21:32.839220', 0, 'hh@gmail.com', '', '', '', 0, 1, '2025-11-20 07:19:14.609817', 'Developer', 'Approved'),
-(22, 'pbkdf2_sha256$600000$9GRF2cziZ2mMVMUBNt0Sbf$EZNn37sZ0TThNhnyhyrM60CyYwd5AQifWFlPTsLBeZc=', '2025-11-20 11:54:43.735110', 0, 'ki', '', '', '', 0, 1, '2025-11-20 10:05:20.063692', 'TeamLead', 'Approved'),
-(23, 'pbkdf2_sha256$600000$if9d448pbYFStpJo8vPSic$U0OMG9Y1Xkifp+vA8S+XCkGRGwjvRfNKOC1sBEKB3zI=', '2025-11-20 11:53:39.350516', 0, 'pi', '', '', '', 0, 1, '2025-11-20 10:20:26.186231', 'Developer', 'Approved');
+(22, 'pbkdf2_sha256$600000$P2sOO3YPCoS3XYDHXJesp1$5mKp/7fBRhioFzz682cnlNBMwLg+Nc73eGRKFaoAvO0=', '2025-11-24 05:16:31.444767', 0, 'ki', '', '', '', 0, 1, '2025-11-20 10:05:20.063692', 'TeamLead', 'Approved'),
+(23, 'pbkdf2_sha256$600000$Lxi7EC0qJHYFhu84BwSxqk$kdT6FrLknL0nHuLwc8rqI3U2YbHUVbFDiCroSuEnDXU=', '2025-11-22 11:04:14.058691', 0, 'pi', '', '', '', 0, 1, '2025-11-20 10:20:26.186231', 'Developer', 'Approved'),
+(24, 'pbkdf2_sha256$600000$MaOQ063U0pObLTWM8SA8Wg$SKOMNQzSLgVHvJT9xCdXVlrJDPkRHkA6PzvG2Bqn50Y=', '2025-11-24 04:58:27.993588', 0, 'Li', '', '', '', 0, 1, '2025-11-24 04:54:15.231391', 'TeamLead', 'Approved'),
+(25, 'pbkdf2_sha256$600000$1lLmzcJonLEaPgq9AXNznQ$7HH9q4mr/f/gxvzAU/5pbfv9lUVtbtYB841ie8LRjl8=', NULL, 0, 'ui', '', '', '', 0, 1, '2025-11-24 05:01:03.925035', 'Developer', 'Pending'),
+(26, 'pbkdf2_sha256$600000$8hajxif1ZioFB6h5wq5TYe$31UVGRVdoJIKYCaag0q0L/h+24P8S8CwS4hZ5itqOQ8=', NULL, 0, 'mi', '', '', '', 0, 1, '2025-11-24 05:03:12.038509', 'Developer', 'Approved'),
+(27, 'pbkdf2_sha256$600000$N9cig1foPMqGzKPIFRHLdb$Fp1R9TMtISNFBFQyku5jUkB5OHYv4oqeY/UJqv6n4Ww=', '2025-11-24 05:12:09.468663', 0, 'gi', '', '', '', 0, 1, '2025-11-24 05:08:29.669134', 'Developer', 'Approved');
 
 -- --------------------------------------------------------
 
@@ -491,7 +496,10 @@ INSERT INTO `itapp_developer` (`id`, `name`, `email`, `phone`, `department`, `co
 (10, 'ss dd', 'ss@gmail.com', '8654373652', 'Python', 'B.Tech', '####', 'developer_proofs/pexels-edmond-dantes-4344860_MjvlMR6.jpg', 17, 'dd', 'ssssssssssssss', 4),
 (11, 'oo oo', 'oo@gmail.com', '8546346626', 'Python', 'B.Tech', '########', 'developer_proofs/pexels-edmond-dantes-4344860_IhLVvOa.jpg', 19, 'oo', 'oo', 11),
 (12, 'hhi hh', 'hh@gmail.com', '9678532525', 'Python', 'B.Tech', 'aasfa', 'developer_proofs/pexels-edmond-dantes-4344860_IhLVvOa_6zlQZqA.jpg', 21, 'hh', 'hh', NULL),
-(13, 'pi pi', 'pi@gmail.com', '9787675655', 'Python', 'B.Tech', '#####', 'developer_proofs/pexels-edmond-dantes-4344860_N8TbzU6.jpg', 23, 'pi', 'pi', 13);
+(13, 'pi pi', 'pi@gmail.com', '9787675655', 'Python', 'B.Tech', '#####', 'developer_proofs/pexels-edmond-dantes-4344860_N8TbzU6.jpg', 23, 'pi', 'pi', 13),
+(14, 'ui ui', 'ui@gmail.com', '7545767568', 'Python', 'B.Tech', '###', 'developer_proofs/close-up-athlete-playing-soccer.jpg', 25, 'ui', 'ui', NULL),
+(15, 'mi mi', 'mi@gmail.com', '7677643234', 'Python', 'B.Tech', '****', 'developer_proofs/representation-user-experience-interface-design_7935raE.jpg', 26, 'mi', 'mi', NULL),
+(16, 'gi gi', 'gi@gmail.com', '6865433456', 'Python', 'B.Tech', '###', 'developer_proofs/pexels-edmond-dantes-4344860_Z5z9XvS.jpg', 27, 'gi', 'gi', NULL);
 
 -- --------------------------------------------------------
 
@@ -557,7 +565,8 @@ INSERT INTO `itapp_teamlead` (`id`, `name`, `email`, `phone`, `department`, `cou
 (10, 'uu', 'uu@gmail.com', '9878655454', 'Python', 'sda', 'sdada', 'teamlead_proofs/pexels-edmond-dantes-4344860_da54JnM.jpg', 16, 'ii', 'uuii'),
 (11, 'xx z', 'xx@gmail.com', '9865747364', 'Python', 'B.Tech', '#####', 'teamlead_proofs/close-up-athlete-playing-soccer.jpg', 18, 'z', 'xx@mail.com'),
 (12, 'kk kk', 'kk@gmail.com', '9876564432', 'Python', 'B.Tech', '#####33', 'teamlead_proofs/pexels-edmond-dantes-4344860_IhLVvOa.jpg', 20, 'kk', 'kk'),
-(13, 'ki ki', 'ki@gmail.com', '9887746458', 'Python', 'B.Tech', '######', 'teamlead_proofs/pexels-edmond-dantes-4344860_IhLVvOa_zAto9DY.jpg', 22, 'ki', 'ki');
+(13, 'ki ki', 'ki@gmail.com', '9887746458', 'Python', 'B.Tech', '######', 'teamlead_proofs/pexels-edmond-dantes-4344860_IhLVvOa_zAto9DY.jpg', 22, 'ki', 'ki'),
+(14, 'Li  Li', 'li@gmail.com', '9786543534', 'Digital Marketing', 'B.Tech', '###', 'teamlead_proofs/pexels-edmond-dantes-4344860_IhLVvOa_jPQbeR3.jpg', 24, 'Li', 'Li');
 
 --
 -- Indexes for dumped tables
@@ -758,7 +767,7 @@ ALTER TABLE `itapp_assigntlupdate`
 -- AUTO_INCREMENT for table `itapp_customuser`
 --
 ALTER TABLE `itapp_customuser`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `itapp_customuser_groups`
@@ -776,7 +785,7 @@ ALTER TABLE `itapp_customuser_user_permissions`
 -- AUTO_INCREMENT for table `itapp_developer`
 --
 ALTER TABLE `itapp_developer`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `itapp_project`
@@ -788,7 +797,7 @@ ALTER TABLE `itapp_project`
 -- AUTO_INCREMENT for table `itapp_teamlead`
 --
 ALTER TABLE `itapp_teamlead`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

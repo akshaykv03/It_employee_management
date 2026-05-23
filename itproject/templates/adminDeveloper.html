@@ -20,11 +20,23 @@
         </div>
     </div>
     <br><br>
+
+      <!-- Messages -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-primary">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      {% if msg %}
+      <div class="alert alert-success">{{ msg }}</div>
+      {% endif %}
+
     <div class="table-responsive">
     <table class="table table-dark text-center table-striped border border-dark border-rounded">
         <thead>
             <tr>
-                <th>#</th>
+                <th>Photo</th>
                 <th>Name</th>
                 <th>Contact</th>
                 <th>E-mail</th>
@@ -34,12 +46,20 @@
                 <th>certificate</th>
                 <th>Action</th>
                 <th>Promote</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             {%for d in data%}
                 <tr>
-                    <td>{{forloop.counter}}</td>
+                    <td>
+                      {% if d.photo %}
+                      <a href="../static/media/{{ d.photo }}" target="_blank" class="btn btn-success"> View
+                    </a>
+                      {% else %}
+                      No Photo
+                      {% endif %}
+                    </td>
                     <td>{{d.name}}</td>
                     <td>{{d.phone}}</td>
                     <td>{{d.email}}</td>
@@ -60,6 +80,7 @@
                     <td>
                       <a href="admChangeUserType?id={{d.user.id}}&type=TeamLead" class="btn btn-secondary">Change to Team Lead</a>
                     </td>
+                    <td><a href="adminDeleteDev?id={{d.id}}" class="btn btn-danger">Delete</a></td>
                      
                 </tr>
             {%endfor%}

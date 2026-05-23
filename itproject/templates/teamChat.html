@@ -1,0 +1,96 @@
+{% extends 'teamLeadHome.html' %}
+{% block content %}
+
+<style>
+#hero img { width: 100%; max-height: 220px; object-fit: cover; }
+.chat-img, .direct-chat-text img, .msg img { max-width: 280px; max-height: 220px; width: auto; height: auto; border-radius: 8px; display: block; margin-top: 5px; }
+.chat-avatar {
+  width: 45px !important;
+  height: 45px !important;
+  min-width: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+</style>
+
+<section id="hero" class="hero section dark-background contact">
+  <img src="../static/assets/img/hero-bg-user.jpg" alt="" data-aos="fade-in">
+
+  <div class="container">
+    <div class="col-lg-12">
+
+      <!-- Title -->
+      <div class="row gy-4 mt-5 justify-content-center" data-aos="fade-up">
+        <div class="col-xl-3 col-md-4">
+          <div class="icon-box">
+            <i class="bi bi-card-list"></i>
+            <h3><a href="">Chat</a></h3>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <!-- Messages -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+     
+<section class="container mt-5">
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            
+            <div class="dev-card">
+                <h4 class="dev-title text-center">Developers List</h4>
+
+                <ul class="list-group">
+                    {% if dev %}
+                        {% for d in dev %}
+<li class="list-group-item d-flex align-items-center">
+
+    <!-- Profile Image -->
+    <img src="/static/media/{{ d.photo }}" 
+         alt="Profile Photo" 
+         class="chat-avatar me-3 flex-shrink-0">
+
+    <!-- Name + Username -->
+    <div class="flex-grow-1"> <br><br>
+        <strong>{{ d.name }} {{ d.lname }}</strong>
+        {% if d.username %}
+            <br><small class="text-muted">@{{ d.username }}</small>
+        {% endif %}
+    </div>
+
+    <!-- Chat Button -->
+    <a href="{% url 'teamlead_chat' %}?id={{ d.id }}" 
+       class="btn btn-sm btn-primary">
+        Chat
+    </a>
+
+</li>
+{% endfor %}
+                    {% else %}
+                        <li class="list-group-item text-muted text-center">
+                            No developers assigned yet.
+                        </li>
+                    {% endif %}
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>
+      <br><br>
+
+  
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

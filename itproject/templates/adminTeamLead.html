@@ -20,11 +20,29 @@
         </div>
     </div>
     <br><br>
+
+      <!-- Messages -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-primary">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      {% if msg %}
+      <div class="alert alert-success">{{ msg }}</div>
+      {% endif %}
+
+    <style>
+        
+        td {
+            vertical-align: middle;
+        }
+    </style>
     <div class="table-responsive">
     <table class="table table-dark text-center table-striped border border-dark border-rounded">
         <thead>
             <tr>
-                <th>#</th>
+                <th>Photo</th>
                 <th>Name</th>
                 <th>Contact</th>
                 <th>E-mail</th>
@@ -34,12 +52,20 @@
                 <th>certificate</th>
                 <th>Action</th>
                 <th>Demote</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             {%for d in data%}
-                <tr>
-                    <td>{{forloop.counter}}</td>
+              <tr>
+                <td>
+                      {% if d.photo %}
+                    <a href="../static/media/{{ d.photo }}" target="_blank" class="btn btn-success"> View
+                    </a>
+                      {% else %}
+                      No Photo
+                      {% endif %}
+                </td>
                     <td>{{d.name}}</td>
                     <td>{{d.phone}}</td>
                     <td>{{d.email}}</td>
@@ -56,9 +82,9 @@
                         <a href="" class="btn btn-danger disabled" title="Rejected">Rejected</a>  
                         {%endif%}
                     </td>
-                    <td><a href="admChangeUserType?id={{d.user.id}}&type=Developer" class="btn btn-warning">Change to Developer</a>
-</td>
-                </tr>
+                    <td><a href="admChangeUserType?id={{d.user.id}}&type=Developer" class="btn btn-warning">Change to Developer</a></td>
+                    <td><a href="adminDeleteTl?id={{d.id}}" class="btn btn-danger">Delete</a></td>
+              </tr>
             {%endfor%}
         </tbody>
     </table>
