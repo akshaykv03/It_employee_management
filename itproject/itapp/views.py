@@ -822,7 +822,7 @@ def teamProfile(request):
 
     if request.method == "POST":
         name = request.POST.get('name')
-        lname = request.POST.get('lname')   # ✅ optional
+        lname = request.POST.get('lname')
         username = request.POST.get('username')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
@@ -830,38 +830,27 @@ def teamProfile(request):
         course = request.POST.get('course')
         address = request.POST.get('address')
 
-        # VALIDATIONS
+        # Username check
         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
             messages.info(request, 'Username already registered..')
             return redirect("/teamProfile")
-<<<<<<< HEAD
-=======
-        elif TeamLead.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or Developer.objects.filter(Q(phone=phone)).exists():
-            messages.info(request,'Phone number already registered..')
-            return redirect("/teamProfile")
-        elif TeamLead.objects.exclude(id=uid).filter(Q(email=email)).exists() or Developer.objects.filter(Q(email=email)).exists():
-            messages.info(request,'Email already registered..')
-            return redirect("/teamProfile")
-        else:
-            TeamLead.objects.filter(id=uid).update(name=name,lname=lname,username=username,email=email,phone=phone,
-                department=dept,course_completed=course,address=address)
-            # updC=CustomUser.objects.get(id=data.user.id)
-            # updC.set_password(password)  # ✅ call the method
-            # updC.save()
->>>>>>> bf41c2dff3fa71050a0f289347db32765c90e7e1
 
-        elif TeamLead.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or Developer.objects.filter(Q(phone=phone)).exists():
-            messages.info(request,'Phone number already registered..')
+        # Phone check
+        elif TeamLead.objects.exclude(id=uid).filter(phone=phone).exists() or \
+             Developer.objects.filter(phone=phone).exists():
+            messages.info(request, 'Phone number already registered..')
             return redirect("/teamProfile")
 
-        elif TeamLead.objects.exclude(id=uid).filter(Q(email=email)).exists() or Developer.objects.filter(Q(email=email)).exists():
-            messages.info(request,'Email already registered..')
+        # Email check
+        elif TeamLead.objects.exclude(id=uid).filter(email=email).exists() or \
+             Developer.objects.filter(email=email).exists():
+            messages.info(request, 'Email already registered..')
             return redirect("/teamProfile")
 
         else:
             TeamLead.objects.filter(id=uid).update(
                 name=name,
-                lname=lname if lname else None,   # ✅ OPTIONAL FIX
+                lname=lname if lname else None,
                 username=username,
                 email=email,
                 phone=phone,
@@ -874,6 +863,8 @@ def teamProfile(request):
             return redirect("/teamProfile")
 
     return render(request, "teamProfile.html", {"data": [data], "passw": passw})
+
+
 
 def teamUpdatePassword(request):
     uid=request.session['id']
@@ -1188,55 +1179,43 @@ def devProfile(request):
         dept = request.POST.get('dept')
         course = request.POST.get('course')
         address = request.POST.get('address')
-
         photo = request.FILES.get('photo')
 
-        # VALIDATIONS
+        # Username validation
         if CustomUser.objects.exclude(id=cus.id).filter(username=username).exists():
             messages.info(request, 'Username already registered..')
             return redirect("/devProfile")
-<<<<<<< HEAD
-=======
-        elif Developer.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
-            messages.info(request,'Phone number already registered..')
-            return redirect("/devProfile")
-        elif Developer.objects.exclude(id=uid).filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
-            messages.info(request,'Email already registered..')
-            return redirect("/devProfile")
-        else:
-            Developer.objects.filter(id=uid).update(name=name,lname=lname,username=username,email=email,phone=phone,
-                department=dept,course_completed=course,address=address)
-            # updC=CustomUser.objects.get(id=data.user.id)
-            # updC.set_password(password)  # ✅ call the method
-            # updC.save()
->>>>>>> bf41c2dff3fa71050a0f289347db32765c90e7e1
 
-        elif Developer.objects.exclude(id=uid).filter(Q(phone=phone)).exists() or TeamLead.objects.filter(Q(phone=phone)).exists():
-            messages.info(request,'Phone number already registered..')
+        # Phone validation
+        elif Developer.objects.exclude(id=uid).filter(phone=phone).exists() or \
+             TeamLead.objects.filter(phone=phone).exists():
+            messages.info(request, 'Phone number already registered..')
             return redirect("/devProfile")
 
-        elif Developer.objects.exclude(id=uid).filter(Q(email=email)).exists() or TeamLead.objects.filter(Q(email=email)).exists():
-            messages.info(request,'Email already registered..')
+        # Email validation
+        elif Developer.objects.exclude(id=uid).filter(email=email).exists() or \
+             TeamLead.objects.filter(email=email).exists():
+            messages.info(request, 'Email already registered..')
             return redirect("/devProfile")
 
+        # UPDATE
         else:
             Developer.objects.filter(id=uid).update(
                 name=name,
-                lname=lname if lname else None,  # ✅ OPTIONAL FIX
+                lname=lname if lname else None,
                 username=username,
                 email=email,
                 phone=phone,
                 department=dept,
                 course_completed=course,
                 address=address,
-                photo=photo if photo else data.photo  # ✅ keep old photo
+                photo=photo if photo else data.photo
             )
 
             messages.success(request, "Profile Updated!")
             return redirect("/devProfile")
 
     return render(request, "devProfile.html", {"data": [data], "passw": passw})
-
 
 def devUpdatePassword(request):
     uid=request.session['id']
