@@ -112,7 +112,7 @@ ipython==8.30.0
 itsdangerous==2.2.0
 jamo==0.4.1
 jax==0.4.38
-jaxlib==0.4.38
+
 jedi==0.19.2
 jieba==0.42.1
 Jinja2==3.1.5
